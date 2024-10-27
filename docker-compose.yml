@@ -1,0 +1,25 @@
+services:
+  mysql:
+    container_name: mysql-iprobot
+    build:
+      context: ./MySQL
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: databasemysql
+    ports:
+      - "3306:3306"
+
+  aiogram:
+    container_name: aiogram-iprobot
+    build: ./bot
+    command: python3 main.py
+    volumes:
+      - ./bot:/usr/src/app/
+    ports:
+      - 8054:8000
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+
+
