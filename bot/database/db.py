@@ -234,21 +234,6 @@ def update_admin_status(telegram_user_id, new_status):
         cursor.close()
         db_connection.close()
 
-def update_admin_chat_id(telegram_user_id, chat_id):
-    db_connection = get_db_connection()
-    cursor = db_connection.cursor(dictionary=True)
-    try:
-        query = """
-            UPDATE admins SET chat_id = %s WHERE telegram_user_id = %s
-        """
-        cursor.execute(query, (chat_id, telegram_user_id))
-        db_connection.commit()
-        return True
-    except mysql.connector.Error as err:
-        return False
-    finally:
-        cursor.close()
-        db_connection.close()
 
 def update_admin_lang(telegram_user_id, lang):
     db_connection = get_db_connection()
@@ -465,37 +450,6 @@ def get_channels_sp2():
         cursor.close()
         db_connection.close()
 
-def update_channel(telegram_id, username=None, for_work_as_admin=None, for_post_ads=None, for_users_to_follow=None):
-    db_connection = get_db_connection()
-    cursor = db_connection.cursor(dictionary=True)
-    try:
-        update_fields = []
-        values = []
-
-        if username is not None:
-            update_fields.append("username = %s")
-            values.append(username)
-        if for_work_as_admin is not None:
-            update_fields.append("for_work_as_admin = %s")
-            values.append(for_work_as_admin)
-        if for_post_ads is not None:
-            update_fields.append("for_post_ads = %s")
-            values.append(for_post_ads)
-        if for_users_to_follow is not None:
-            update_fields.append("for_users_to_follow = %s")
-            values.append(for_users_to_follow)
-
-        if update_fields:
-            query = f"UPDATE channels SET {', '.join(update_fields)} WHERE telegram_id = %s"
-            values.append(telegram_id)
-            cursor.execute(query, tuple(values))
-            db_connection.commit()
-            return True
-    except mysql.connector.Error as err:
-        return False
-    finally:
-        cursor.close()
-        db_connection.close()
 
 def delete_channel(id):
     db_connection = get_db_connection()
@@ -569,56 +523,6 @@ def get_ads_vacancy(id):
         cursor.close()
         db_connection.close()
 
-def update_ads_vacancy(telegram_id, skills=None, company=None, activity=None, hr=None, phone_number=None, teritory=None, work_time=None, salary=None, additionals=None, channel=None):
-    db_connection = get_db_connection()
-    cursor = db_connection.cursor(dictionary=True)
-    try:
-        update_fields = []
-        values = []
-
-        if skills is not None:
-            update_fields.append("skills = %s")
-            values.append(skills)
-        if company is not None:
-            update_fields.append("company = %s")
-            values.append(company)
-        if activity is not None:
-            update_fields.append("activity = %s")
-            values.append(activity)
-        if hr is not None:
-            update_fields.append("hr = %s")
-            values.append(hr)
-        if phone_number is not None:
-            update_fields.append("phone_number = %s")
-            values.append(phone_number)
-        if teritory is not None:
-            update_fields.append("teritory = %s")
-            values.append(teritory)
-        if work_time is not None:
-            update_fields.append("work_time = %s")
-            values.append(work_time)
-        if salary is not None:
-            update_fields.append("salary = %s")
-            values.append(salary)
-        if additionals is not None:
-            update_fields.append("additionals = %s")
-            values.append(additionals)
-        if channel is not None:
-            update_fields.append("channel = %s")
-            values.append(channel)
-
-        if update_fields:
-            query = f"UPDATE ads_vacancy SET {', '.join(update_fields)} WHERE telegram_id = %s"
-            values.append(telegram_id)
-            cursor.execute(query, tuple(values))
-            db_connection.commit()
-            return True
-    except mysql.connector.Error as err:
-        return False
-    finally:
-        cursor.close()
-        db_connection.close()
-
 def delete_ads_vacancy(telegram_id):
     db_connection = get_db_connection()
     cursor = db_connection.cursor(dictionary=True)
@@ -688,52 +592,6 @@ def get_ads_employee(id):
         cursor.close()
         db_connection.close()
 
-def update_ads_employee(telegram_id, name=None, age=None, job=None, experience=None, number=None, teritory=None, salary=None, additionals=None, channel=None):
-    db_connection = get_db_connection()
-    cursor = db_connection.cursor(dictionary=True)
-    try:
-        update_fields = []
-        values = []
-
-        if name is not None:
-            update_fields.append("name = %s")
-            values.append(name)
-        if age is not None:
-            update_fields.append("age = %s")
-            values.append(age)
-        if job is not None:
-            update_fields.append("job = %s")
-            values.append(job)
-        if experience is not None:
-            update_fields.append("experience = %s")
-            values.append(experience)
-        if number is not None:
-            update_fields.append("number = %s")
-            values.append(number)
-        if teritory is not None:
-            update_fields.append("teritory = %s")
-            values.append(teritory)
-        if salary is not None:
-            update_fields.append("salary = %s")
-            values.append(salary)
-        if additionals is not None:
-            update_fields.append("additionals = %s")
-            values.append(additionals)
-        if channel is not None:
-            update_fields.append("channel = %s")
-            values.append(channel)
-
-        if update_fields:
-            query = f"UPDATE ads_employee SET {', '.join(update_fields)} WHERE telegram_id = %s"
-            values.append(telegram_id)
-            cursor.execute(query, tuple(values))
-            db_connection.commit()
-            return True
-    except mysql.connector.Error as err:
-        return False
-    finally:
-        cursor.close()
-        db_connection.close()
 
 def delete_ads_employee(telegram_id):
     db_connection = get_db_connection()
@@ -801,43 +659,7 @@ def get_ads_partner(id):
         cursor.close()
         db_connection.close()
 
-def update_ads_partner(telegram_id, name=None, job=None, number=None, teritory=None, additionals=None, channel=None):
-    db_connection = get_db_connection()
-    cursor = db_connection.cursor(dictionary=True)
-    try:
-        update_fields = []
-        values = []
 
-        if name is not None:
-            update_fields.append("name = %s")
-            values.append(name)
-        if job is not None:
-            update_fields.append("job = %s")
-            values.append(job)
-        if number is not None:
-            update_fields.append("number = %s")
-            values.append(number)
-        if teritory is not None:
-            update_fields.append("teritory = %s")
-            values.append(teritory)
-        if additionals is not None:
-            update_fields.append("additionals = %s")
-            values.append(additionals)
-        if channel is not None:
-            update_fields.append("channel = %s")
-            values.append(channel)
-
-        if update_fields:
-            query = f"UPDATE ads_partner SET {', '.join(update_fields)} WHERE telegram_id = %s"
-            values.append(telegram_id)
-            cursor.execute(query, tuple(values))
-            db_connection.commit()
-            return True
-    except mysql.connector.Error as err:
-        return False
-    finally:
-        cursor.close()
-        db_connection.close()
 
 def delete_ads_partner(telegram_id):
     db_connection = get_db_connection()

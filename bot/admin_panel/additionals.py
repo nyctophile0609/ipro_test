@@ -58,10 +58,3 @@ async def format_message(data):
 
 
 
-def check_availibility(page_num,data):
-    result=[0,0]
-    if page_num>0:
-        result[0]=1
-    if len(data)>10:
-        result[1]=1
-    return result

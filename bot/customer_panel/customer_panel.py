@@ -21,7 +21,6 @@ async def start_func(msg:types.Message,state:FSMContext):
     channels_sp1=get_channels_sp1()
     channels_sp2=get_channels_sp2()
     if is_admin(msg.from_user.id):
-        update_admin_chat_id(msg.from_user.id,msg.chat.id)
         await msg.reply("you r admin",)
     
     elif is_user(msg.from_user.id) and await is_chat_member_loop(channels_sp1,msg.from_user.id):
